@@ -119,7 +119,22 @@ Once the user approves, create the file at `product/sections/[section-id]/spec.m
 - Set `shell: true` if the section should display inside the app shell (this is the default)
 - Set `shell: false` if the section should display as a standalone page without the shell
 
-The section-id is the slug version of the section title (lowercase, hyphens instead of spaces).
+The section-id is the slug version of the section title. Use the SAME slugify logic as product-loader.ts:
+
+```javascript
+function slugify(str: string): string {
+  return str
+    .toLowerCase()
+    .replace(/\s+&\s+/g, '-and-')  // Convert " & " to "-and-" first
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '')
+}
+```
+
+Examples:
+- "Blocking & Deadlocks" → "blocking-and-deadlocks"
+- "Performance Optimization" → "performance-optimization"
+- "Instance Monitoring" → "instance-monitoring"
 
 ## Step 8: Confirm and Next Steps
 
